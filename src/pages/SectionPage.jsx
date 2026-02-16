@@ -32,7 +32,7 @@ function SectionPage({ type }) {
     return (
       <div className="text-center py-12">
         <h2 className="text-2xl font-bold text-accent">Section Not Found</h2>
-        <p className="mt-4 text-secondary">The requested section does not exist.</p>
+        <p className="mt-4 text-primary-light">The requested section does not exist.</p>
       </div>
     );
   }
@@ -56,13 +56,16 @@ function SectionPage({ type }) {
         <div className="flex items-center space-x-4 mb-4">
           <span className="text-5xl">{section.icon}</span>
           <div>
-            <h1 className="text-3xl md:text-4xl font-bold text-primary">
+            {/* MAIN TITLE - Changed to gold */}
+            <h1 className="text-3xl md:text-4xl font-bold text-accent mb-2">
               {section.title}
             </h1>
-            <p className="text-xl text-accent mt-2">{section.subtitle}</p>
+            {/* SUBTITLE - Changed to lighter gold */}
+            <p className="text-xl text-accent-light mt-1">{section.subtitle}</p>
           </div>
         </div>
-        <p className="text-lg text-secondary leading-relaxed">
+        {/* INTRODUCTION - Changed to primary for better readability */}
+        <p className="text-lg text-primary leading-relaxed">
           {section.introduction}
         </p>
       </div>
@@ -72,10 +75,12 @@ function SectionPage({ type }) {
         {/* Main Points */}
         {section.points.map((point, index) => (
           <div key={index} className="border-b border-soft-dark pb-6 last:border-0">
-            <h2 className="text-2xl font-bold text-primary mb-3">
+            {/* POINT HEADINGS - Changed to gold */}
+            <h2 className="text-2xl font-bold text-accent mb-3">
               {point.heading}
             </h2>
-            <p className="text-secondary mb-4">{point.text}</p>
+            {/* POINT TEXT - Changed to primary-light */}
+            <p className="text-primary-light mb-4">{point.text}</p>
             
             {point.evidence && (
               <EvidenceBlock
@@ -84,6 +89,13 @@ function SectionPage({ type }) {
                 translation={point.evidence.translation}
                 reference={point.evidence.surah || point.evidence.reference}
               />
+            )}
+            
+            {/* EXPLANATION - Add this for enhanced files */}
+            {point.explanation && (
+              <div className="mt-4 p-4 bg-soft-dark rounded-lg">
+                <p className="text-primary-dark italic">{point.explanation}</p>
+              </div>
             )}
           </div>
         ))}
@@ -95,15 +107,41 @@ function SectionPage({ type }) {
         
         {/* Duas */}
         {section.duas && section.duas.length > 0 && (
-          <div className="bg-primary bg-opacity-5 rounded-lg p-6">
-            <h3 className="text-xl font-bold mb-4 text-primary">Supplications</h3>
+          <div className="bg-soft-dark rounded-lg p-6">
+            {/* DUAS HEADING - Changed to gold */}
+            <h3 className="text-xl font-bold mb-4 text-accent">Supplications</h3>
             {section.duas.map((dua, index) => (
               <div key={index} className="mb-4 last:mb-0">
-                <p className="arabic-text text-2xl mb-2">{dua.arabic}</p>
-                <p className="text-secondary italic">{dua.translation}</p>
-                <p className="text-sm text-soft-dark mt-1">— {dua.reference}</p>
+                <p className="font-arabic text-2xl mb-2 text-primary-dark">{dua.arabic}</p>
+                <p className="text-primary-light italic">{dua.translation}</p>
+                <p className="text-sm text-accent mt-1">— {dua.reference}</p>
+                {/* DUA CONTEXT - Add for enhanced files */}
+                {dua.context && (
+                  <p className="text-sm text-accent-light mt-1">{dua.context}</p>
+                )}
               </div>
             ))}
+          </div>
+        )}
+        
+        {/* Footnotes - Add for enhanced files */}
+        {section.footnotes && (
+          <div className="mt-8 p-4 bg-soft-dark rounded-lg">
+            <h4 className="font-bold text-accent mb-2">Notes</h4>
+            {Object.entries(section.footnotes).map(([key, value]) => (
+              <p key={key} className="text-sm text-primary-light mb-2">
+                <span className="font-semibold text-primary">{key}:</span> {value}
+              </p>
+            ))}
+          </div>
+        )}
+        
+        {/* Key Takeaway - Add for enhanced files */}
+        {section.keyTakeaway && (
+          <div className="mt-8 p-6 bg-accent bg-opacity-10 rounded-lg border-l-4 border-accent">
+            <p className="text-primary-dark font-medium italic">
+              {section.keyTakeaway}
+            </p>
           </div>
         )}
       </div>
@@ -113,13 +151,13 @@ function SectionPage({ type }) {
         <button
           onClick={handlePDFDownload}
           disabled={loading}
-          className={`btn-primary text-lg px-8 py-3 flex items-center space-x-2 ${
+          className={`bg-accent text-soft px-8 py-3 rounded-lg font-semibold transition duration-300 transform hover:scale-105 hover:bg-accent-light flex items-center space-x-2 ${
             loading ? 'opacity-50 cursor-not-allowed' : ''
           }`}
         >
           {loading ? (
             <>
-              <svg className="animate-spin h-5 w-5 mr-2" viewBox="0 0 24 24">
+              <svg className="animate-spin h-5 w-5 mr-2 text-soft" viewBox="0 0 24 24">
                 <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
               </svg>
