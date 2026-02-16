@@ -1,74 +1,81 @@
-export default {
-  id: "character",
-  title: "Character Development",
-  subtitle: "Emulating the Prophet ﷺ",
-  icon: "⭐",
-  introduction: `Good character (khuluq) is the heaviest thing on the scales on Judgment Day, 
-    outweighing even mountains of good deeds. The Prophet ﷺ was sent to perfect noble character, 
-    and his example is our guide. This module explores how to embody the beautiful traits of 
-    the Prophet ﷺ in our daily lives.`,
+import { Link } from "react-router-dom";
+import QuoteBlock from "../components/layout/shared/QuoteBlock";
+
+function Home() {
+  const sections = [
+    { id: "foundation", title: "Foundation", icon: "🏗️", desc: "Understanding our purpose", color: "bg-soft" },
+    { id: "childhood", title: "Childhood", icon: "👶", desc: "Nurturing the next generation", color: "bg-soft" },
+    { id: "youth", title: "Youth", icon: "🌱", desc: "The prime of life", color: "bg-soft" },
+    { id: "marriage", title: "Marriage", icon: "💍", desc: "Half of your faith", color: "bg-soft" },
+    { id: "parenting", title: "Parenting", icon: "👪", desc: "Raising righteous children", color: "bg-soft" },
+    { id: "character", title: "Character", icon: "⭐", desc: "Emulating the Prophet ﷺ", color: "bg-soft" },
+    { id: "death", title: "Death", icon: "🤲", desc: "The ultimate reality", color: "bg-soft" },
+  ];
   
-  points: [
-    {
-      heading: "The Goal of Good Character",
-      text: "The Prophet ﷺ emphasized that character is central to faith—it's not merely about being 'nice,' but about embodying the sunnah in our interactions, reactions, and inner state.",
-      evidence: {
-        hadith: "The most complete of believers in faith are those with the best character.",
-        reference: "Sunan al-Tirmidhi (hadith 1162, graded sahih)"
-      },
-      explanation: "This hadith connects faith directly to character. The more beautiful our character, the more complete our faith becomes. Character isn't separate from worship—it IS worship when done with the right intention."
-    },
-    {
-      heading: "Truthfulness (Sidq)",
-      text: "Truthfulness is the foundation of all good character—it aligns our outer speech with our inner reality and with Allah's reality. It's the quality that distinguishes believers from hypocrites.",
-      evidence: {
-        hadith: "Indeed, truthfulness leads to righteousness, and righteousness leads to Paradise. A man continues to be truthful and strives for truthfulness until he is recorded with Allah as a truthful person (siddiq).",
-        reference: "Sahih al-Bukhari (hadith 6094) & Sahih Muslim"
-      },
-      explanation: "Notice the progression: truthfulness → righteousness → Paradise. The Prophet ﷺ also warned that lying leads to sin, and sin leads to Hellfire. Truthfulness elevates us to the rank of the prophets (siddiqun)."
-    },
-    {
-      heading: "Patience (Sabr)",
-      text: "Patience is more than waiting—it's restraining the soul from complaint, the tongue from lamenting, and the limbs from striking out. It's half of faith and brings immense reward.",
-      evidence: {
-        quran: "إِنَّمَا يُوَفَّى الصَّابِرُونَ أَجْرَهُم بِغَيْرِ حِسَابٍ",
-        translation: "Indeed, the patient will be given their reward without account (i.e., without measure, infinitely).",
-        surah: "Az-Zumar (39:10)"
-      },
-      explanation: "This verse is extraordinary—while all good deeds are rewarded according to their measure, patience's reward is limitless. Why? Because patience requires holding onto faith when every fiber of your being wants to react. It's the truest test of iman."
-    }
-  ],
-  
-  actionSteps: [
-    "Practice one good character trait each week—focus deeply on it, study how the Prophet ﷺ embodied it, and consciously apply it in all interactions",
-    "Reflect on the Prophet's ﷺ character daily by reading a hadith about his dealings with others and asking: 'How can I apply this today?'",
-    "Seek forgiveness (istighfar) when you fall short—not just for sins, but for moments when your character didn't reflect the sunnah",
-    "Surround yourself with people of good character—character is 'caught' more than taught, and companions profoundly shape us",
-    "Make dua constantly for Allah to beautify your character—recognize that good character is a gift from Allah, not merely self-improvement"
-  ],
-  
-  duas: [
-    {
-      arabic: "اللَّهُمَّ اهْدِنِي لِأَحْسَنِ الْأَخْلَاقِ لَا يَهْدِي لِأَحْسَنِهَا إِلَّا أَنْت",
-      translation: "O Allah, guide me to the best of characters, for none guides to the best of them except You.",
-      reference: "Sahih Muslim (hadith 771)",
-      context: "The Prophet ﷺ used to make this dua regularly, teaching us that good character comes through divine guidance, not just effort alone."
-    },
-    {
-      arabic: "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنْ مُنْكَرَاتِ الْأَخْلَاقِ وَالْأَعْمَالِ وَالْأَهْوَاءِ",
-      translation: "O Allah, I seek refuge in You from evil characters, deeds, and desires.",
-      reference: "Sunan al-Tirmidhi (hadith 3591)",
-      context: "This complementary dua shows that we should actively seek protection from bad character just as we seek guidance toward good character."
-    }
-  ],
-  
-  footnotes: {
-    characterDefinition: "In Arabic, 'khuluq' (character) shares the root with 'khalaqa' (to create)—indicating that character is the 'inner creation' that parallels our physical creation. Just as Allah formed our outer appearance, we must cultivate our inner character.",
-    siddiq: "The title 'Siddiq' (truthful) was given to Abu Bakr radiAllahu anhu because his truthfulness was so absolute that he believed in the Prophet ﷺ without hesitation. It's the highest rank after prophethood.",
-    rewardWithoutAccount: "Scholars explain that other deeds may have limits because they involve specific actions (prayer, fasting, charity), but patience has no limits—it's required in every situation, so its reward has no limits."
-  },
-  
-  relatedModules: ["purification", "prophet-stories", "daily-worship"],
-  
-  keyTakeaway: "Good character isn't a soft skill—it's the essence of Islam. The Prophet ﷺ said, 'I was only sent to perfect noble character.' Everything else—prayer, fasting, zakat—serves this ultimate purpose: to shape us into people of beautiful character who reflect divine qualities in human form."
-};
+  return (
+    <div className="space-y-12 animate-fade-in">
+      {/* Hero Section */}
+      <section className="text-center py-12 bg-gradient-to-b from-primary to-primary-light text-soft rounded-2xl">
+        <h1 className="text-4xl md:text-5xl font-bold mb-4">
+          Sirat Al-Hayah
+        </h1>
+        <p className="text-xl md:text-2xl mb-6 text-accent">
+          From Cradle to Jannah
+        </p>
+        <p className="max-w-2xl mx-auto text-secondary">
+          A comprehensive Islamic guide through the journey of life, 
+          based on Quran and Sunnah
+        </p>
+        <div className="mt-8">
+          <Link to="/foundation" className="btn-primary inline-block">
+            Begin Your Journey
+          </Link>
+        </div>
+      </section>
+      
+      {/* Quranic Verse */}
+      <QuoteBlock 
+        text="Indeed, in the creation of the heavens and the earth and the alternation of the night and the day are signs for those of understanding."
+        author="Quran 3:190"
+      />
+      
+      {/* Sections Grid */}
+      <section>
+        <h2 className="section-title">Life Stages</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+          {sections.map((section) => (
+            <Link
+              key={section.id}
+              to={`/${section.id}`}
+              className={`${section.color} rounded-xl p-6 shadow-md hover:shadow-xl transition duration-300 transform hover:-translate-y-1`}
+            >
+              <div className="text-4xl mb-3">{section.icon}</div>
+              <h3 className="text-xl font-bold mb-2 text-primary">{section.title}</h3>
+              <p className="text-secondary">{section.desc}</p>
+              <div className="mt-4 text-accent font-semibold">Learn more →</div>
+            </Link>
+          ))}
+        </div>
+      </section>
+      
+      {/* About Section */}
+      <section className="bg-soft rounded-xl p-8 shadow-md">
+        <h2 className="section-title">About This Project</h2>
+        <p className="text-lg leading-relaxed mb-4 text-secondary">
+          Sirat Al-Hayah (The Path of Life) is a spiritual guide designed to help 
+          Muslims navigate every stage of life according to Islamic teachings. 
+          From the foundation of faith in childhood to preparing for the Hereafter, 
+          each section provides Quranic evidence, prophetic guidance, and practical steps.
+        </p>
+        <p className="text-primary">
+          <span className="font-bold">Founder:</span> Anwar Dahir Yahaya
+        </p>
+        <p className="text-sm text-soft-dark mt-4">
+          May Allah accept this effort and make it beneficial for all who read it.
+        </p>
+      </section>
+    </div>
+  );
+}
+
+export default Home;
