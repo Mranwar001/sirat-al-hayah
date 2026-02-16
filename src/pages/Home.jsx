@@ -1,81 +1,189 @@
 import { Link } from "react-router-dom";
-import QuoteBlock from "../components/layout/shared/QuoteBlock";
+import { useState } from "react";
+import { generatePDF } from "../utils/pdfGenerator";
+import EvidenceBlock from "../components/layout/shared/EvidenceBlock";
+import ActionSteps from "../components/layout/shared/ActionSteps";
 
-function Home() {
-  const sections = [
-    { id: "foundation", title: "Foundation", icon: "🏗️", desc: "Understanding our purpose", color: "bg-soft" },
-    { id: "childhood", title: "Childhood", icon: "👶", desc: "Nurturing the next generation", color: "bg-soft" },
-    { id: "youth", title: "Youth", icon: "🌱", desc: "The prime of life", color: "bg-soft" },
-    { id: "marriage", title: "Marriage", icon: "💍", desc: "Half of your faith", color: "bg-soft" },
-    { id: "parenting", title: "Parenting", icon: "👪", desc: "Raising righteous children", color: "bg-soft" },
-    { id: "character", title: "Character", icon: "⭐", desc: "Emulating the Prophet ﷺ", color: "bg-soft" },
-    { id: "death", title: "Death", icon: "🤲", desc: "The ultimate reality", color: "bg-soft" },
-  ];
+// Import all data
+import foundation from "../data/foundation";
+import childhood from "../data/childhood";
+import youth from "../data/youth";
+import marriage from "../data/marriage";
+import parenting from "../data/parenting";
+import character from "../data/character";
+import death from "../data/death";
+
+function SectionPage({ type }) {
+  const [loading, setLoading] = useState(false);
+  
+  const dataMap = {
+    foundation,
+    childhood,
+    youth,
+    marriage,
+    parenting,
+    character,
+    death
+  };
+  
+  const section = dataMap[type];
+  
+  if (!section) {
+    return (
+      <div className="text-center py-12">
+        <h2 className="text-2xl font-bold text-accent">Section Not Found</h2>
+        <p className="mt-4 text-secondary">The requested section does not exist.</p>
+      </div>
+    );
+  }
+  
+  const handlePDFDownload = async () => {
+    setLoading(true);
+    try {
+      await generatePDF("pdf-content", section.title);
+    } catch (error) {
+      console.error("PDF Error:", error);
+      alert("Failed to generate PDF. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
   
   return (
-    <div className="space-y-12 animate-fade-in">
-      {/* Hero Section */}
-      <section className="text-center py-12 bg-gradient-to-b from-primary to-primary-light text-soft rounded-2xl">
-        <h1 className="text-4xl md:text-5xl font-bold mb-4">
-          Sirat Al-Hayah
-        </h1>
-        <p className="text-xl md:text-2xl mb-6 text-accent">
-          From Cradle to Jannah
-        </p>
-        <p className="max-w-2xl mx-auto text-secondary">
-          A comprehensive Islamic guide through the journey of life, 
-          based on Quran and Sunnah
-        </p>
-        <div className="mt-8">
-          <Link to="/foundation" className="btn-primary inline-block">
-            Begin Your Journey
-          </Link>
+    <div className="space-y-6 animate-fade-in">
+      {/* Header */}
+      <div className="bg-soft rounded-lg shadow-md p-8">
+        <div className="flex items-center space-x-4 mb-4">
+          <span className="text-5xl">{section.icon}</span>
+          <div>
+            {/* MAIN TITLE - Now Gold */}
+            <h1 className="text-3xl md:text-4xl font-bold text-accent mb-2">
+              {section.title}
+            </h1>
+            {/* SUBTITLE - Now Slightly Lighter Gold / Warm */}
+            <p className="text-xl text-accent-light mt-1">{section.subtitle}</p>
+          </div>
         </div>
-      </section>
-      
-      {/* Quranic Verse */}
-      <QuoteBlock 
-        text="Indeed, in the creation of the heavens and the earth and the alternation of the night and the day are signs for those of understanding."
-        author="Quran 3:190"
-      />
-      
-      {/* Sections Grid */}
-      <section>
-        <h2 className="section-title">Life Stages</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
-          {sections.map((section) => (
-            <Link
-              key={section.id}
-              to={`/${section.id}`}
-              className={`${section.color} rounded-xl p-6 shadow-md hover:shadow-xl transition duration-300 transform hover:-translate-y-1`}
-            >
-              <div className="text-4xl mb-3">{section.icon}</div>
-              <h3 className="text-xl font-bold mb-2 text-primary">{section.title}</h3>
-              <p className="text-secondary">{section.desc}</p>
-              <div className="mt-4 text-accent font-semibold">Learn more →</div>
-            </Link>
-          ))}
-        </div>
-      </section>
-      
-      {/* About Section */}
-      <section className="bg-soft rounded-xl p-8 shadow-md">
-        <h2 className="section-title">About This Project</h2>
-        <p className="text-lg leading-relaxed mb-4 text-secondary">
-          Sirat Al-Hayah (The Path of Life) is a spiritual guide designed to help 
-          Muslims navigate every stage of life according to Islamic teachings. 
-          From the foundation of faith in childhood to preparing for the Hereafter, 
-          each section provides Quranic evidence, prophetic guidance, and practical steps.
+        {/* INTRODUCTION - Keep as is */}
+        <p className="text-lg text-secondary leading-relaxed">
+          {section.introduction}
         </p>
-        <p className="text-primary">
-          <span className="font-bold">Founder:</span> Anwar Dahir Yahaya
-        </p>
-        <p className="text-sm text-soft-dark mt-4">
-          May Allah accept this effort and make it beneficial for all who read it.
-        </p>
-      </section>
+      </div>
+      
+      {/* PDF Content */}
+      <div id="pdf-content" className="bg-soft rounded-lg shadow-md p-8 space-y-8">
+        {/* Main Points */}
+        {section.points.map((point, index) => (
+          <div key={index} className="border-b border-soft-dark pb-6 last:border-0">
+            {/* POINT HEADINGS - Now Gold to match main title */}
+            <h2 className="text-2xl font-bold text-accent mb-3">
+              {point.heading}
+            </h2>
+            {/* POINT TEXT - Keep as secondary text */}
+            <p className="text-secondary mb-4">{point.text}</p>
+            
+            {point.evidence && (
+              <EvidenceBlock
+                type={point.evidence.quran ? 'quran' : 'hadith'}
+                text={point.evidence.quran || point.evidence.hadith}
+                translation={point.evidence.translation}
+                reference={point.evidence.surah || point.evidence.reference}
+              />
+            )}
+            
+            {/* EXPLANATION - Add if exists (from your enhanced files) */}
+            {point.explanation && (
+              <div className="mt-4 p-4 bg-primary bg-opacity-5 rounded-lg">
+                <p className="text-primary-dark italic">{point.explanation}</p>
+              </div>
+            )}
+          </div>
+        ))}
+        
+        {/* Action Steps */}
+        {section.actionSteps && (
+          <ActionSteps steps={section.actionSteps} />
+        )}
+        
+        {/* Duas */}
+        {section.duas && section.duas.length > 0 && (
+          <div className="bg-primary bg-opacity-5 rounded-lg p-6">
+            {/* DUAS HEADING - Gold to match */}
+            <h3 className="text-xl font-bold mb-4 text-accent">Supplications</h3>
+            {section.duas.map((dua, index) => (
+              <div key={index} className="mb-4 last:mb-0">
+                <p className="arabic-text text-2xl mb-2">{dua.arabic}</p>
+                <p className="text-secondary italic">{dua.translation}</p>
+                <p className="text-sm text-soft-dark mt-1">— {dua.reference}</p>
+                {/* DUA CONTEXT - Add if exists */}
+                {dua.context && (
+                  <p className="text-sm text-accent mt-1">{dua.context}</p>
+                )}
+              </div>
+            ))}
+          </div>
+        )}
+        
+        {/* Footnotes - Add if exists */}
+        {section.footnotes && (
+          <div className="mt-8 p-4 bg-soft-dark bg-opacity-10 rounded-lg">
+            <h4 className="font-bold text-accent mb-2">Notes</h4>
+            {Object.entries(section.footnotes).map(([key, value]) => (
+              <p key={key} className="text-sm text-secondary mb-2">
+                <span className="font-semibold text-primary">{key}:</span> {value}
+              </p>
+            ))}
+          </div>
+        )}
+        
+        {/* Key Takeaway - Add if exists */}
+        {section.keyTakeaway && (
+          <div className="mt-8 p-6 bg-accent bg-opacity-10 rounded-lg border-l-4 border-accent">
+            <p className="text-primary-dark font-medium italic">
+              {section.keyTakeaway}
+            </p>
+          </div>
+        )}
+      </div>
+      
+      {/* PDF Download Button */}
+      <div className="flex justify-center">
+        <button
+          onClick={handlePDFDownload}
+          disabled={loading}
+          className={`btn-primary text-lg px-8 py-3 flex items-center space-x-2 ${
+            loading ? 'opacity-50 cursor-not-allowed' : ''
+          }`}
+        >
+          {loading ? (
+            <>
+              <svg className="animate-spin h-5 w-5 mr-2" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+              </svg>
+              <span>Generating PDF...</span>
+            </>
+          ) : (
+            <>
+              <span>📥</span>
+              <span>Download as PDF</span>
+            </>
+          )}
+        </button>
+      </div>
+      
+      {/* Navigation Links */}
+      <div className="flex justify-between mt-8">
+        <Link 
+          to="/" 
+          className="text-primary hover:text-accent transition flex items-center space-x-1"
+        >
+          <span>←</span>
+          <span>Back to Home</span>
+        </Link>
+      </div>
     </div>
   );
 }
 
-export default Home;
+export default SectionPage;
