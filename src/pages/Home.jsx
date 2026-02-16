@@ -56,15 +56,12 @@ function SectionPage({ type }) {
         <div className="flex items-center space-x-4 mb-4">
           <span className="text-5xl">{section.icon}</span>
           <div>
-            {/* MAIN TITLE - Now Gold */}
-            <h1 className="text-3xl md:text-4xl font-bold text-accent mb-2">
+            <h1 className="text-3xl md:text-4xl font-bold text-primary">
               {section.title}
             </h1>
-            {/* SUBTITLE - Now Slightly Lighter Gold / Warm */}
-            <p className="text-xl text-accent-light mt-1">{section.subtitle}</p>
+            <p className="text-xl text-accent mt-2">{section.subtitle}</p>
           </div>
         </div>
-        {/* INTRODUCTION - Keep as is */}
         <p className="text-lg text-secondary leading-relaxed">
           {section.introduction}
         </p>
@@ -75,11 +72,9 @@ function SectionPage({ type }) {
         {/* Main Points */}
         {section.points.map((point, index) => (
           <div key={index} className="border-b border-soft-dark pb-6 last:border-0">
-            {/* POINT HEADINGS - Now Gold to match main title */}
-            <h2 className="text-2xl font-bold text-accent mb-3">
+            <h2 className="text-2xl font-bold text-primary mb-3">
               {point.heading}
             </h2>
-            {/* POINT TEXT - Keep as secondary text */}
             <p className="text-secondary mb-4">{point.text}</p>
             
             {point.evidence && (
@@ -89,13 +84,6 @@ function SectionPage({ type }) {
                 translation={point.evidence.translation}
                 reference={point.evidence.surah || point.evidence.reference}
               />
-            )}
-            
-            {/* EXPLANATION - Add if exists (from your enhanced files) */}
-            {point.explanation && (
-              <div className="mt-4 p-4 bg-primary bg-opacity-5 rounded-lg">
-                <p className="text-primary-dark italic">{point.explanation}</p>
-              </div>
             )}
           </div>
         ))}
@@ -108,40 +96,14 @@ function SectionPage({ type }) {
         {/* Duas */}
         {section.duas && section.duas.length > 0 && (
           <div className="bg-primary bg-opacity-5 rounded-lg p-6">
-            {/* DUAS HEADING - Gold to match */}
-            <h3 className="text-xl font-bold mb-4 text-accent">Supplications</h3>
+            <h3 className="text-xl font-bold mb-4 text-primary">Supplications</h3>
             {section.duas.map((dua, index) => (
               <div key={index} className="mb-4 last:mb-0">
                 <p className="arabic-text text-2xl mb-2">{dua.arabic}</p>
                 <p className="text-secondary italic">{dua.translation}</p>
                 <p className="text-sm text-soft-dark mt-1">— {dua.reference}</p>
-                {/* DUA CONTEXT - Add if exists */}
-                {dua.context && (
-                  <p className="text-sm text-accent mt-1">{dua.context}</p>
-                )}
               </div>
             ))}
-          </div>
-        )}
-        
-        {/* Footnotes - Add if exists */}
-        {section.footnotes && (
-          <div className="mt-8 p-4 bg-soft-dark bg-opacity-10 rounded-lg">
-            <h4 className="font-bold text-accent mb-2">Notes</h4>
-            {Object.entries(section.footnotes).map(([key, value]) => (
-              <p key={key} className="text-sm text-secondary mb-2">
-                <span className="font-semibold text-primary">{key}:</span> {value}
-              </p>
-            ))}
-          </div>
-        )}
-        
-        {/* Key Takeaway - Add if exists */}
-        {section.keyTakeaway && (
-          <div className="mt-8 p-6 bg-accent bg-opacity-10 rounded-lg border-l-4 border-accent">
-            <p className="text-primary-dark font-medium italic">
-              {section.keyTakeaway}
-            </p>
           </div>
         )}
       </div>
