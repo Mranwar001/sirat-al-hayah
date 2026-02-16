@@ -1,0 +1,73 @@
+@import "tailwindcss";
+
+:root {
+  --bg-primary: rgb(245 245 245); /* soft background */
+  --bg-secondary: rgb(250 250 250); /* lighter soft tone */
+  --text-primary: rgb(31 41 55); /* deep slate */
+  --text-secondary: rgb(75 85 99); /* muted slate */
+  --accent-color: rgb(212 175 55); /* gold */
+  --accent-hover: rgb(227 196 104); /* lighter gold */
+}
+
+html.dark {
+  --bg-primary: rgb(17 24 39);
+  --bg-secondary: rgb(31 41 55);
+  --text-primary: rgb(243 244 246);
+  --text-secondary: rgb(209 213 219);
+  --accent-color: rgb(212 175 55);
+  --accent-hover: rgb(227 196 104);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    font-family: 'Inter', sans-serif;
+    color: var(--text-primary);
+    background-color: var(--bg-primary);
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: bold;
+    color: var(--text-primary);
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply px-6 py-2 rounded-lg font-semibold transition duration-300 transform hover:scale-105;
+    background-color: var(--accent-color);
+    color: var(--bg-primary);
+  }
+  .btn-primary:hover {
+    background-color: var(--accent-hover);
+  }
+  
+  .btn-secondary {
+    @apply px-6 py-2 rounded-lg font-semibold transition duration-300;
+    background-color: var(--text-primary);
+    color: var(--bg-primary);
+  }
+  .btn-secondary:hover {
+    background-color: var(--text-secondary);
+  }
+  
+  .card {
+    @apply rounded-lg shadow-md p-6 hover:shadow-lg transition duration-300;
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+  }
+  
+  .section-title {
+    @apply text-3xl md:text-4xl font-bold mb-6 relative inline-block;
+    color: var(--text-primary);
+  }
+  .section-title::after {
+    content: '';
+    @apply absolute bottom-0 left-0 w-1/2 h-1 mt-2;
+    background-color: var(--accent-color);
+  }
+}
