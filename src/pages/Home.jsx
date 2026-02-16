@@ -1,151 +1,74 @@
-import { Link } from "react-router-dom";
-import { useState } from "react";
-import { generatePDF } from "../utils/pdfGenerator";
-import EvidenceBlock from "../components/layout/shared/EvidenceBlock";
-import ActionSteps from "../components/layout/shared/ActionSteps";
-
-// Import all data
-import foundation from "../data/foundation";
-import childhood from "../data/childhood";
-import youth from "../data/youth";
-import marriage from "../data/marriage";
-import parenting from "../data/parenting";
-import character from "../data/character";
-import death from "../data/death";
-
-function SectionPage({ type }) {
-  const [loading, setLoading] = useState(false);
+export default {
+  id: "character",
+  title: "Character Development",
+  subtitle: "Emulating the Prophet ﷺ",
+  icon: "⭐",
+  introduction: `Good character (khuluq) is the heaviest thing on the scales on Judgment Day, 
+    outweighing even mountains of good deeds. The Prophet ﷺ was sent to perfect noble character, 
+    and his example is our guide. This module explores how to embody the beautiful traits of 
+    the Prophet ﷺ in our daily lives.`,
   
-  const dataMap = {
-    foundation,
-    childhood,
-    youth,
-    marriage,
-    parenting,
-    character,
-    death
-  };
-  
-  const section = dataMap[type];
-  
-  if (!section) {
-    return (
-      <div className="text-center py-12">
-        <h2 className="text-2xl font-bold text-accent">Section Not Found</h2>
-        <p className="mt-4 text-secondary">The requested section does not exist.</p>
-      </div>
-    );
-  }
-  
-  const handlePDFDownload = async () => {
-    setLoading(true);
-    try {
-      await generatePDF("pdf-content", section.title);
-    } catch (error) {
-      console.error("PDF Error:", error);
-      alert("Failed to generate PDF. Please try again.");
-    } finally {
-      setLoading(false);
+  points: [
+    {
+      heading: "The Goal of Good Character",
+      text: "The Prophet ﷺ emphasized that character is central to faith—it's not merely about being 'nice,' but about embodying the sunnah in our interactions, reactions, and inner state.",
+      evidence: {
+        hadith: "The most complete of believers in faith are those with the best character.",
+        reference: "Sunan al-Tirmidhi (hadith 1162, graded sahih)"
+      },
+      explanation: "This hadith connects faith directly to character. The more beautiful our character, the more complete our faith becomes. Character isn't separate from worship—it IS worship when done with the right intention."
+    },
+    {
+      heading: "Truthfulness (Sidq)",
+      text: "Truthfulness is the foundation of all good character—it aligns our outer speech with our inner reality and with Allah's reality. It's the quality that distinguishes believers from hypocrites.",
+      evidence: {
+        hadith: "Indeed, truthfulness leads to righteousness, and righteousness leads to Paradise. A man continues to be truthful and strives for truthfulness until he is recorded with Allah as a truthful person (siddiq).",
+        reference: "Sahih al-Bukhari (hadith 6094) & Sahih Muslim"
+      },
+      explanation: "Notice the progression: truthfulness → righteousness → Paradise. The Prophet ﷺ also warned that lying leads to sin, and sin leads to Hellfire. Truthfulness elevates us to the rank of the prophets (siddiqun)."
+    },
+    {
+      heading: "Patience (Sabr)",
+      text: "Patience is more than waiting—it's restraining the soul from complaint, the tongue from lamenting, and the limbs from striking out. It's half of faith and brings immense reward.",
+      evidence: {
+        quran: "إِنَّمَا يُوَفَّى الصَّابِرُونَ أَجْرَهُم بِغَيْرِ حِسَابٍ",
+        translation: "Indeed, the patient will be given their reward without account (i.e., without measure, infinitely).",
+        surah: "Az-Zumar (39:10)"
+      },
+      explanation: "This verse is extraordinary—while all good deeds are rewarded according to their measure, patience's reward is limitless. Why? Because patience requires holding onto faith when every fiber of your being wants to react. It's the truest test of iman."
     }
-  };
+  ],
   
-  return (
-    <div className="space-y-6 animate-fade-in">
-      {/* Header */}
-      <div className="bg-soft rounded-lg shadow-md p-8">
-        <div className="flex items-center space-x-4 mb-4">
-          <span className="text-5xl">{section.icon}</span>
-          <div>
-            <h1 className="text-3xl md:text-4xl font-bold text-primary">
-              {section.title}
-            </h1>
-            <p className="text-xl text-accent mt-2">{section.subtitle}</p>
-          </div>
-        </div>
-        <p className="text-lg text-secondary leading-relaxed">
-          {section.introduction}
-        </p>
-      </div>
-      
-      {/* PDF Content */}
-      <div id="pdf-content" className="bg-soft rounded-lg shadow-md p-8 space-y-8">
-        {/* Main Points */}
-        {section.points.map((point, index) => (
-          <div key={index} className="border-b border-soft-dark pb-6 last:border-0">
-            <h2 className="text-2xl font-bold text-primary mb-3">
-              {point.heading}
-            </h2>
-            <p className="text-secondary mb-4">{point.text}</p>
-            
-            {point.evidence && (
-              <EvidenceBlock
-                type={point.evidence.quran ? 'quran' : 'hadith'}
-                text={point.evidence.quran || point.evidence.hadith}
-                translation={point.evidence.translation}
-                reference={point.evidence.surah || point.evidence.reference}
-              />
-            )}
-          </div>
-        ))}
-        
-        {/* Action Steps */}
-        {section.actionSteps && (
-          <ActionSteps steps={section.actionSteps} />
-        )}
-        
-        {/* Duas */}
-        {section.duas && section.duas.length > 0 && (
-          <div className="bg-primary bg-opacity-5 rounded-lg p-6">
-            <h3 className="text-xl font-bold mb-4 text-primary">Supplications</h3>
-            {section.duas.map((dua, index) => (
-              <div key={index} className="mb-4 last:mb-0">
-                <p className="arabic-text text-2xl mb-2">{dua.arabic}</p>
-                <p className="text-secondary italic">{dua.translation}</p>
-                <p className="text-sm text-soft-dark mt-1">— {dua.reference}</p>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-      
-      {/* PDF Download Button */}
-      <div className="flex justify-center">
-        <button
-          onClick={handlePDFDownload}
-          disabled={loading}
-          className={`btn-primary text-lg px-8 py-3 flex items-center space-x-2 ${
-            loading ? 'opacity-50 cursor-not-allowed' : ''
-          }`}
-        >
-          {loading ? (
-            <>
-              <svg className="animate-spin h-5 w-5 mr-2" viewBox="0 0 24 24">
-                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
-                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-              </svg>
-              <span>Generating PDF...</span>
-            </>
-          ) : (
-            <>
-              <span>📥</span>
-              <span>Download as PDF</span>
-            </>
-          )}
-        </button>
-      </div>
-      
-      {/* Navigation Links */}
-      <div className="flex justify-between mt-8">
-        <Link 
-          to="/" 
-          className="text-primary hover:text-accent transition flex items-center space-x-1"
-        >
-          <span>←</span>
-          <span>Back to Home</span>
-        </Link>
-      </div>
-    </div>
-  );
-}
-
-export default SectionPage;
+  actionSteps: [
+    "Practice one good character trait each week—focus deeply on it, study how the Prophet ﷺ embodied it, and consciously apply it in all interactions",
+    "Reflect on the Prophet's ﷺ character daily by reading a hadith about his dealings with others and asking: 'How can I apply this today?'",
+    "Seek forgiveness (istighfar) when you fall short—not just for sins, but for moments when your character didn't reflect the sunnah",
+    "Surround yourself with people of good character—character is 'caught' more than taught, and companions profoundly shape us",
+    "Make dua constantly for Allah to beautify your character—recognize that good character is a gift from Allah, not merely self-improvement"
+  ],
+  
+  duas: [
+    {
+      arabic: "اللَّهُمَّ اهْدِنِي لِأَحْسَنِ الْأَخْلَاقِ لَا يَهْدِي لِأَحْسَنِهَا إِلَّا أَنْت",
+      translation: "O Allah, guide me to the best of characters, for none guides to the best of them except You.",
+      reference: "Sahih Muslim (hadith 771)",
+      context: "The Prophet ﷺ used to make this dua regularly, teaching us that good character comes through divine guidance, not just effort alone."
+    },
+    {
+      arabic: "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنْ مُنْكَرَاتِ الْأَخْلَاقِ وَالْأَعْمَالِ وَالْأَهْوَاءِ",
+      translation: "O Allah, I seek refuge in You from evil characters, deeds, and desires.",
+      reference: "Sunan al-Tirmidhi (hadith 3591)",
+      context: "This complementary dua shows that we should actively seek protection from bad character just as we seek guidance toward good character."
+    }
+  ],
+  
+  footnotes: {
+    characterDefinition: "In Arabic, 'khuluq' (character) shares the root with 'khalaqa' (to create)—indicating that character is the 'inner creation' that parallels our physical creation. Just as Allah formed our outer appearance, we must cultivate our inner character.",
+    siddiq: "The title 'Siddiq' (truthful) was given to Abu Bakr radiAllahu anhu because his truthfulness was so absolute that he believed in the Prophet ﷺ without hesitation. It's the highest rank after prophethood.",
+    rewardWithoutAccount: "Scholars explain that other deeds may have limits because they involve specific actions (prayer, fasting, charity), but patience has no limits—it's required in every situation, so its reward has no limits."
+  },
+  
+  relatedModules: ["purification", "prophet-stories", "daily-worship"],
+  
+  keyTakeaway: "Good character isn't a soft skill—it's the essence of Islam. The Prophet ﷺ said, 'I was only sent to perfect noble character.' Everything else—prayer, fasting, zakat—serves this ultimate purpose: to shape us into people of beautiful character who reflect divine qualities in human form."
+};
