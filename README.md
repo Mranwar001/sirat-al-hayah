@@ -294,11 +294,10 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 **Anwar Dahir Yahaya** - *Founder & Developer*
 
-- Email: [your-email@example.com]
-- GitHub: [@yourusername](https://github.com/yourusername)
-- Twitter: [@yourhandle](https://twitter.com/yourhandle)
-
-Project Link: [https://github.com/yourusername/sirat-al-hayah](https://github.com/yourusername/sirat-al-hayah)
+- Email: anwarcscience@gmail.com
+- GitHub: https://github.com/Mranwar001
+- Phone No:+2348109770991
+Project Link: https://github.com/Mranwar001/sirat-al-hayah https://github.com/Mranwar001/sirat-al-hayah
 
 ---
 
