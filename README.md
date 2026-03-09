@@ -326,7 +326,7 @@ Project Link: https://github.com/Mranwar001/sirat-al-hayah https://github.com/Mr
 
 *"The best among you are those who learn the Quran and teach it."* (Bukhari)
 
-**© 2024 Sirat Al-Hayah. All Rights Reserved.**
+**© 2026 Sirat Al-Hayah. All Rights Reserved.**
 
 </div>
 ```
